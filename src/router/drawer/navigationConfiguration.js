@@ -4,36 +4,14 @@ import StackNavigation from '../stack/StackNavigation';
 import Dashboard from '../../components/dashboard/DashboardPage';
 import Sidebar from '../../components/common/Sidebar';
 import Account from '../../components/account/AccountPage';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import Vendor from '../../components/vendor/VendorPage';
 
 const routeConfiguration = DrawerNavigator({
-  Dashboard: {
-    screen: StackNavigation,
-    navigationOptions: {
-      drawerLabel: 'Dashboard',
-      drawerIcon: ({ tintColor }) => (
-        <FontAwesomeIcon name='dashboard' style={style.iconStyle}/>
-      ),
-    },
-  },
-  Account: {
-    screen: StackNavigation,
-    navigationOptions: {
-      drawerLabel: 'Account',
-      drawerIcon: ({ tintColor }) => (
-        <MaterialIcon name='account-settings' style={style.iconStyle}/>
-      ),
-    },
-  }
+  Dashboard: { screen: StackNavigation },
+  Account: { screen: StackNavigation },
+  VendorList: { screen: StackNavigation }
 }, {
   contentComponent: props => <Sidebar {...props} />
 });
-
-const style = {
-  iconStyle: {
-    fontSize: 20
-  }
-}
 
 export const Drawer = routeConfiguration;

@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Subtitle } from 'native-base';
-import { View, Text } from 'react-native';
+import { Container,
+  Button,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  Text } from 'native-base';
+import { View, StatusBar } from 'react-native';
+import { create } from 'react-native-platform-stylesheet';
 import { connect } from 'react-redux';
 import { back,
   toggleDrawer,
   goToLogin } from '../../actions';
-
 class HeaderComponent extends Component {
   constructor(){
     super();
@@ -26,19 +34,38 @@ class HeaderComponent extends Component {
   }
 
   renderLogin(){
-
     return(
       <Button
+        hidden
         transparent
+        style={{borderRadius: 20}}
         onPress={this.props.goToLogin} >
         <Text>Log in</Text>
       </Button>
     )
   }
 
+  renderLeftButton(){
+    return(
+      <Button
+        transparent
+        onPress={this.cb} >
+         {(!this.welcomeRoute) && <Icon name={this.name} />}
+      </Button>
+    )
+  }
+
   render(){
+    let { textStyle,
+      leftHeaderStyle,
+      rightHeaderStyle} = styles;
     return (
-      <Header>
+      <Header
+        style={{backgroundColor: 'white'}} >
+        <StatusBar
+          animated
+          barStyle='dark-content'
+          backgroundColor='#f7f7f7'/>
         <Left>
           <Button
             transparent
@@ -47,17 +74,38 @@ class HeaderComponent extends Component {
           </Button>
         </Left>
         <Body>
-          <Title>{this.title}</Title>
+          <Title>
+            <Text>
+              {this.title}
+            </Text>
+          </Title>
         </Body>
           <Right>
             {(this.welcomeRoute) && this.renderLogin()}
           </Right>
       </Header>
-    );
+      );
+    }
+};
+
+const styles = create({
+  textStyle: {
+    fontSize: 18,
+    android: {
+      color: '#000',
+      fontWeight: 'normal'
+    }
+  },
+  leftHeaderStyle: {
+    alignItems: 'flex-start',
+    flexDirection: 'row'
+  },
+  rightHeaderStyle: {
+    alignItems: 'flex-end',
+    flexDirection: 'row'
   }
+})
 
-
-  };
 
 const mapStateToProps = state => ({ navigation: state.stack });
 export default connect(mapStateToProps, { back,

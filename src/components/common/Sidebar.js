@@ -14,9 +14,11 @@ import {
 } from "native-base";
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { toggleDrawer,
   goToDashboard,
   goToAccount,
+  goToVendorList,
   logoutUser } from '../../actions';
 
 const routes = ["Dashboard", "Account"];
@@ -24,16 +26,18 @@ const routes = ["Dashboard", "Account"];
 class SideBar extends React.Component {
   constructor(){
     super()
-    this.onPress = this.onPress.bind(this);
+    this.onListPress = this.onListPress.bind(this);
   }
 
-  onPress(route){
+  onListPress(route){
     this.props.toggleDrawer();
     switch (route) {
       case 'Dashboard':
         return this.props.goToDashboard();
       case 'Account':
         return this.props.goToAccount();
+      case 'VendorList':
+        return this.props.goToVendorList();
       case 'Logout':
         return this.props.logoutUser();
       default:
@@ -83,7 +87,7 @@ class SideBar extends React.Component {
           <List>
             {/* DASHBOARD */}
             <ListItem icon
-              onPress={() => this.onPress('Dashboard')} >
+              onPress={() => this.onListPress('Dashboard')} >
               <Left>
                 <FontAwesomeIcon
                   name='dashboard'
@@ -95,7 +99,7 @@ class SideBar extends React.Component {
             </ListItem>
             {/* ACCOUNT */}
             <ListItem icon
-              onPress={() => this.onPress('Account')} >
+              onPress={() => this.onListPress('Account')} >
               <Left>
                 <MaterialIcon
                   name='account-settings'
@@ -105,12 +109,24 @@ class SideBar extends React.Component {
                 <Text>Account</Text>
               </Body>
             </ListItem>
+            {/* VENDOR LIST */}
+            <ListItem icon
+              onPress={() => this.onListPress('VendorList')} >
+              <Left>
+                <Ionicons
+                  name='ios-search-outline'
+                  style={iconStyle}/>
+              </Left>
+              <Body>
+                <Text>Find Business</Text>
+              </Body>
+            </ListItem>
             {/* LOGOUT */}
             <ListItem icon
-              onPress={() => this.onPress('Logout')} >
+              onPress={() => this.onListPress('Logout')} >
               <Left>
                 <MaterialIcon
-                  name='account-settings'
+                  name='logout'
                   style={iconStyle}/>
               </Left>
               <Body>
@@ -166,4 +182,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { goToDashboard,
   toggleDrawer,
   goToAccount,
+  goToVendorList,
   logoutUser })(SideBar)

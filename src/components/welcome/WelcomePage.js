@@ -1,45 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container,
+import { Text,
+  Container,
   Content,
   Card,
-  Text,
-  CardItem,
-  Button } from 'native-base';
+  Button,
+  CardItem } from 'native-base';
 import OauthButton from '../common/OauthButton';
 import Header from '../common/Header';
-import { goToLogin } from '../../actions';
+import { View } from 'react-native'
+import { goToAccountCreate } from '../../actions';
 
 class WelcomePage extends Component {
-
-  onPressCreateAccount(){
-    this.props.navigation.navigate('Account');
-  }
 
   render(){
     let { contentStyle } = style;
     return(
       <Container>
-          <Header
-            title={'Welcome!'} />
-
-            <Content padder style={contentStyle}>
-              <OauthButton
-                provider={'facebook'}
-                />
-              <OauthButton
-                provider={'google'}
-                />
-
-
-              <Button full rounded primary
-                style={{ marginTop: 10 }}
-                onPress={this.onPressCreateAccount.bind(this)}
-                >
-                <Text>Create account</Text>
-              </Button>
-
-
+        <Header
+          title='Welcome'
+          />
+        <Content padder>
+          <OauthButton
+            provider={'facebook'}
+            />
+          <OauthButton
+            provider={'google'}
+            />
+          <Button full rounded
+            style={{ marginTop: 10 }}
+            onPress={this.props.goToAccountCreate}
+            >
+            <Text>Create account</Text>
+          </Button>
         </Content>
       </Container>
     )
@@ -53,4 +46,4 @@ const style = {
   }
 }
 
-export default connect(null, { goToLogin })(WelcomePage);
+export default connect(null, { goToAccountCreate })(WelcomePage);

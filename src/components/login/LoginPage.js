@@ -6,9 +6,12 @@ import { Container,
   Form,
   Button,
   Item,
-  Input } from 'native-base';
+  Input,
+  Spinner } from 'native-base';
 import Header from '../common/Header';
-import { loginUser } from '../../actions';
+import { loginUser,
+  userUpdateProp,
+  authInit } from '../../actions';
 
 class LoginPage extends Component {
   constructor(){
@@ -16,11 +19,32 @@ class LoginPage extends Component {
     this.onPressLogin = this.onPressLogin.bind(this);
   }
 
-  onPressLogin(){
-    this.props.loginUser();
+  componentWillMount(){
+    this.props.authInit();
+  }
+
+  onPressLogin() {
+    let { email, password } = this.props.user;
+    this.props.loginUser({email, password});
+  }
+
+  renderButton(){
+    let { isLoading } = this.props;
+    return (
+      <Button
+        block
+        disabled={isLoading}
+        onPress={this.onPressLogin}
+        style={{ marginTop: 30 }} >
+        {isLoading == true ?
+          <Spinner color='white' /> :
+          <Text>Login</Text>}
+      </Button>
+    )
   }
 
   render() {
+    let { user, error } = this.props
     return (
       <Container>
         <Header
@@ -29,16 +53,22 @@ class LoginPage extends Component {
         <Content padder>
           <Form>
             <Item>
-              <Input placeholder="Email" />
+              <Input
+                autoCorrect={false}
+                placeholder="Email"
+                onChangeText={value => this.props.userUpdateProp({ prop: 'email', value})} />
             </Item>
             <Item last>
-               <Input placeholder="Password" />
+               <Input
+                 autoCorrect={false}
+                 secureTextEntry
+                 onChangeText={value => this.props.userUpdateProp({ prop: 'password', value})}
+                 placeholder="Password" />
             </Item>
-            <Button block
-              onPress={this.props.onPressLogin}
-              style={{ marginTop: 50 }} >
-              <Text>Login</Text>
-            </Button>
+            <Text style={style.errorStyle}>
+              {error}
+            </Text>
+            {this.renderButton()}
           </Form>
         </Content>
       </Container>
@@ -46,4 +76,20 @@ class LoginPage extends Component {
   }
 }
 
-export default connect(null, { loginUser })(LoginPage);
+const style = {
+  errorStyle: {
+    color: 'red',
+    alignSelf: 'center',
+    marginTop: 15
+  }
+}
+
+const mapStateToProps = (state) => {
+  console.log(state.auth, 'auth');
+  let { user, error, isLoading } = state.auth;
+  return { user, error, isLoading }
+}
+
+export default connect(mapStateToProps, {
+  loginUser, userUpdateProp, authInit
+ })(LoginPage);

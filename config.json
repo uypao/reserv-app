@@ -1,3 +1,4 @@
 {
-  "reservApi": "http://localhost:8080"
+  "reservApiAVD": "http://localhost:8080",
+  "reservApi": "http://192.168.0.22:8080"
 }

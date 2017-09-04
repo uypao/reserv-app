@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
-import AjaxStatusReducer from './AjaxStatusReducer';
-import AuthReducer from './AuthReducer';
 import { stack, drawer } from './NavReducer';
+import AuthReducer from './AuthReducer';
+import AccountFormReducer from './AccountFormReducer';
+import VendorReducer from './VendorReducer';
 
 export default combineReducers({
-  ajaxStatus: AjaxStatusReducer,
-  auth: AuthReducer,
   stack,
-  drawer
+  drawer,
+  auth: AuthReducer,
+  accountForm: AccountFormReducer,
+  vendors: VendorReducer
 });

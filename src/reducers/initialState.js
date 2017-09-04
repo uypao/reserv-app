@@ -1,4 +1,7 @@
 export default {
-  ajaxStatus: {},
-  auth: {}
+  accountForm: {
+    display_name: '',
+    email: '',
+    password: ''
+  }
 }

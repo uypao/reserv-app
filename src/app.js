@@ -26,7 +26,6 @@ class App extends Component {
   }
 
   loginCallback = ({ url }) => {
-    Linking.removeEventListener('url', this.loginCallback)
     const callbackUrl = decodeURI(url.match(/user=([^#]+)/)[1])
     const user = JSON.parse(callbackUrl)[0];
     this.store.dispatch(loginUserSuccess(user))

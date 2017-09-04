@@ -11,22 +11,7 @@ import {
 class OauthButton extends Component {
   constructor(){
     super();
-    this.state = {
-      user: null
-    }
-
   }
-
-  loginCallback = ({ url }) => {
-    // Extract stringified user string out of the URL
-    Linking.removeEventListener('url', this.loginCallback)
-    const callbackUrl = decodeURI(url.match(/user=([^#]+)/)[1])
-    const user = JSON.parse(callbackUrl)[0];
-    this.setState({
-      user
-    })
-    this.props.loginUserSuccess();
-  };
 
   render(){
     let { provider } = this.props;
